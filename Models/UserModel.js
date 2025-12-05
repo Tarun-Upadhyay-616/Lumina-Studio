@@ -24,6 +24,9 @@ const userSchema = new Schema({
         default: 10,
         min: 0,
     },
+    
+},{ 
+    timestamps: true
 })
 const hashedPassword = bcrypt.hash(password,10)
 this.password = hashedPassword
