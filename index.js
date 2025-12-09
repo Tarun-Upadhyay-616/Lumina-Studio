@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import authroutes from "./Routes/AuthRoutes.js"
 import cors from 'cors'
 import cookieparser from "cookie-parser"
+import imageroutes from "./Routes/ImageRoutes.js"
 const app = express()
 dotenv.config()
 const port  = process.env.PORT || 3000
@@ -13,6 +14,7 @@ app.use(cors({
     credentials: true
 }))
 app.use('/api/auth',authroutes)
+app.use('/edit',imageroutes)
 app.use(cookieparser())
 app.use(express.json())
 app.get('/',(req,res)=>{
