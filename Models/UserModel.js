@@ -28,6 +28,5 @@ const userSchema = new Schema({
 },{ 
     timestamps: true
 })
-const hashedPassword = bcrypt.hash(password,10)
-this.password = hashedPassword
+
 export const User = mongoose.model('User',userSchema)
