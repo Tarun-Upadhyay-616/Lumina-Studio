@@ -8,6 +8,8 @@ import imageroutes from "./Routes/ImageRoutes.js"
 const app = express()
 dotenv.config()
 const port  = process.env.PORT || 3000
+app.use(cookieparser())
+app.use(express.json())
 app.use(cors({
     origin: process.env.ORIGIN,
     methods: ["GET","POST","PUT","PATCH","DELETE"],
@@ -15,8 +17,6 @@ app.use(cors({
 }))
 app.use('/api/auth',authroutes)
 app.use('/edit',imageroutes)
-app.use(cookieparser())
-app.use(express.json())
 app.get('/',(req,res)=>{
     res.send("Working")
 })
