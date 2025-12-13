@@ -1,10 +1,13 @@
-import express from "express"
-import dotenv from "dotenv"
-import mongoose from "mongoose"
-import authroutes from "./Routes/AuthRoutes.js"
-import cors from 'cors'
-import cookieparser from "cookie-parser"
-import imageroutes from "./Routes/ImageRoutes.js"
+const express = require("express")
+const dotenv = require("dotenv")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const authroutes = require("./Routes/AuthRoutes.js")
+const imageroutes = require("./Routes/ImageRoutes.js")
+const cookieparser = require("cookie-parser")
+const ImageKitHandler = require("./Controllers/ImageKitHandler.js")
+
+
 const app = express()
 dotenv.config()
 const port  = process.env.PORT || 3000
@@ -15,8 +18,11 @@ app.use(cors({
     methods: ["GET","POST","PUT","PATCH","DELETE"],
     credentials: true
 }))
+
 app.use('/api/auth',authroutes)
 app.use('/edit',imageroutes)
+app.get('/ikit', ImageKitHandler)
+
 app.get('/',(req,res)=>{
     res.send("Working")
 })
@@ -27,5 +33,5 @@ mongoose.connect(dburl)
         console.log(err.message);
     })
 app.listen(port,()=>{
-    console.log('listening on port 8080')
+    console.log(`listening on port ${port}`)
 })

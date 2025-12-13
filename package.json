@@ -2,22 +2,29 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/Tarun-Upadhyay-616/Lumina-Studio#readme",
+  "bugs": {
+    "url": "https://github.com/Tarun-Upadhyay-616/Lumina-Studio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tarun-Upadhyay-616/Lumina-Studio.git"
+  },
   "license": "ISC",
   "author": "",
+  "type": "commonjs",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "@google/genai": "^1.32.0",
+    "@imagekit/nodejs": "^7.1.1",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "mongoose": "^9.0.0",
+    "mongoose": "^9.0.1",
     "multer": "^2.0.2",
     "sharp": "^0.34.5"
   }

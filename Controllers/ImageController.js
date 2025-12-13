@@ -1,4 +1,5 @@
-import sharp from 'sharp'
+// import sharp from 'sharp'
+const sharp = require('sharp')
 
 
 const getQualityFromTargetSize = (targetSizeKB) => {
@@ -10,7 +11,7 @@ const getQualityFromTargetSize = (targetSizeKB) => {
     return 80; 
 }
 
-export const resizeImage = async (req,res) =>{
+const resizeImage = async (req,res) =>{
   
     const { width: widthStr, height: heightStr, size: sizeStr } = req.body
 
@@ -64,3 +65,5 @@ export const resizeImage = async (req,res) =>{
         res.status(500).send("Error processing image.");
     }
 }
+
+module.exports= resizeImage
