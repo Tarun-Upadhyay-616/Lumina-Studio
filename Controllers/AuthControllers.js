@@ -1,7 +1,6 @@
-// import { User } from './../Models/UserModel.js';
-const User  =  require('./../Models/UserModel.js');
+import { User } from './../Models/UserModel.js';
 
-const signin = async (req, res) => {
+export const signin = async (req, res) => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
@@ -36,4 +35,3 @@ const signin = async (req, res) => {
         return res.status(500).send(error.message)
     }
 }
-module.exports = signin

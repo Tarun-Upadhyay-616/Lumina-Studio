@@ -1,45 +1,42 @@
-const mongoose = require("mongoose")
-const { Schema } = mongoose;
+import {mongoose , Schema} from "mongoose"
 
 const imageArtifactSchema = new Schema({
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User', 
-        required: true
-    },
-    originalUrl: {
+    originalName: {
         type: String,
         required: true
-        // URL from Cloudinary/Firebase Storage/etc.
     },
-    editedUrl: {
+    originalSizeKB: { 
+        type: Number, 
+        required: true 
+    },
+    originalURL: { 
+        type: String, 
+        required: true 
+    },
+
+    resizedName: { 
         type: String,
-        required: true
-        // URL of the final edited image
+        required: true 
     },
-    prompt: {
-        type: String,
-        default: ''
+    resizedSizeKB: { 
+        type: Number, 
+        required: true 
     },
-    editType: {
-        type: String,
-        required: true,
-        enum: [
-            'BG_REMOVE', 'COLORIZE', 'OBJECT_REMOVE', 'UPSCALE',
-            'STYLE_TRANSFER', 'GENERATIVE_FILL', 'CAPTIONING'
-        ]
+    resizedURL: { 
+        type: String, 
+        required: true 
     },
-    creditCost: {
-        type: Number,
-        required: true,
-        default: 1 
+    resizeType: { 
+        type: String, 
+        enum: ['dimension', 'size'], 
+        required: true 
     },
-    isPrivate: {
-        type: Boolean,
-        default: true
-    }
-}, { 
-    timestamps: true
+    resizeParams: {
+        width: { type: Number },
+        height: { type: Number },
+        targetSizeKB: { type: Number }
+    },
+    uploadedAt: { type: Date, default: Date.now }
 });
 
 export const ImageArifact = mongoose.model('ImageArtifact', imageArtifactSchema);
