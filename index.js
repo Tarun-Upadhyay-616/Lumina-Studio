@@ -1,10 +1,3 @@
-// const express = require("express")
-// const dotenv = require("dotenv")
-// const mongoose = require("mongoose")
-// const cors = require("cors")
-// const authroutes = require("./Routes/AuthRoutes.js")
-// const imageroutes = require("./Routes/ImageRoutes.js")
-// const cookieparser = require("cookie-parser")
 
 import express from "express"
 import dotenv from "dotenv"
