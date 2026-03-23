@@ -28,11 +28,11 @@ app.get('/',(req,res)=>{
     res.send("Working")
 })
 const dburl = process.env.DBURL
-mongoose.connect(dburl)
-    .then(console.log("mongodb connected"))
-    .catch((err)=>{
-        console.log(err.message);
-    })
+// mongoose.connect(dburl)
+//     .then(console.log("mongodb connected"))
+//     .catch((err)=>{
+//         console.log(err.message);
+//     })
 app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })

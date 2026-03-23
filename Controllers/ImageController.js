@@ -34,7 +34,7 @@ export const resizeImage =  async(req, res) => {
 
         let resizedFileBuffer = originalFileBuffer
         let resizedFilename = `resized-${Date.now()}${originalExt}`
-        let resizedSize = originalFileBuffer.length / 1024 // KB
+        let resizedSize = originalFileBuffer.length / 1024
         let resizeParams = {}
         const targetKB = parseInt(targetSizeKB)
 
@@ -45,8 +45,6 @@ export const resizeImage =  async(req, res) => {
             if (isNaN(targetWidth) || isNaN(targetHeight) || targetWidth <= 0 || targetHeight <= 0) {
                 return res.status(400).json({ message: 'Invalid width or height for dimension resize.' });
             }
-
-            // Sharp will resize to fit within the box while maintaining aspect ratio
             resizedFileBuffer = await sharp(originalFileBuffer)
                 .resize(targetWidth, targetHeight, { fit: 'fill' }) 
                 .toBuffer();
@@ -96,18 +94,13 @@ export const resizeImage =  async(req, res) => {
                         }
                     }
                 } else {
-                     // For lossless formats (PNG/GIF), we cannot reduce size via quality
                      console.log("Warning: Size reduction limited for lossless format (PNG/GIF).")
                      currentBuffer = await sharp(originalFileBuffer).toBuffer()
                 }
-
-            // --- SCENARIO 2: Target Size is LARGER than Original (Stretching/Upscaling) ---
             } else if (targetKB > currentSize) {
                 console.log('Target is larger: Applying stretching (upscaling dimensions).')
-                
-                // We will iteratively increase dimensions by a small factor until the size is met
-                let scaleFactor = 1.05 // Increase by 5% per iteration
-                let maxIterations = 10 // Cap to prevent excessive stretching
+                let scaleFactor = 1.05 
+                let maxIterations = 10 
 
                 for (let i = 0 ;i < maxIterations ;i++) {
                     if (currentSize >= targetKB) break
@@ -116,13 +109,11 @@ export const resizeImage =  async(req, res) => {
                     finalHeight = Math.round(finalHeight * scaleFactor)
 
                     sharpPipeline = sharp(originalFileBuffer).resize(finalWidth, finalHeight, { fit: 'contain' })
-                    
-                    // Re-compress at high quality to get the new, larger file size
                     if (originalExt === '.jpeg' || originalExt === '.jpg') {
                         currentBuffer = await sharpPipeline.jpeg({ quality: 90 }).toBuffer()
                     } else if (originalExt === '.webp') {
                         currentBuffer = await sharpPipeline.webp({ quality: 90 }).toBuffer()
-                    } else { // PNG/GIF
+                    } else {
                         currentBuffer = await sharpPipeline.toBuffer()
                     }
 
@@ -133,11 +124,8 @@ export const resizeImage =  async(req, res) => {
                     }
                 }
             } else {
-                // Target KB is equal to current size
-                 console.log('Target size is equal to original size. No action taken.')
+                console.log('Target size is equal to original size. No action taken.')
             }
-
-            // Final Assignment after processing
             resizedFileBuffer = currentBuffer
             resizedSize = currentSize
             resizeParams = { 
